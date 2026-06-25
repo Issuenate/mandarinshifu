@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Authorized — Mandarin Shifu</title>
+<style>
+  :root { --ink:#16140F; --paper:#F6F1E7; --accent:#C8442E; }
+  body { background:var(--paper); color:var(--ink); margin:0; min-height:100vh;
+         display:flex; align-items:center; justify-content:center;
+         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:560px; padding:32px; text-align:center; }
+  h1 { font-size:1.6rem; margin:.2em 0; }
+  p { line-height:1.6; }
+  .code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:1.05rem;
+          word-break:break-all; background:#fff; border:2px solid var(--accent);
+          border-radius:10px; padding:14px 16px; margin:18px 0; }
+  button { background:var(--accent); color:#fff; border:0; border-radius:10px;
+           padding:12px 22px; font-size:1rem; cursor:pointer; }
+  .hint { color:#6b655a; font-size:.9rem; min-height:1.2em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>✅ Authorized</h1>
+  <p>Copy this code and paste it into your terminal (the <code>upload_tiktok.py</code> prompt):</p>
+  <div class="code" id="code">…</div>
+  <button id="copy">Copy code</button>
+  <p class="hint" id="hint"></p>
+</main>
+<script>
+  var p = new URLSearchParams(location.search);
+  var code = p.get('code'), state = p.get('state'), err = p.get('error');
+  var el = document.getElementById('code');
+  if (code) { el.textContent = code; }
+  else if (err) { el.textContent = 'Error: ' + err + ' — ' + (p.get('error_description') || ''); }
+  else { el.textContent = 'No ?code= found in the URL.'; }
+  document.getElementById('copy').onclick = function () {
+    if (code) { navigator.clipboard.writeText(code);
+      document.getElementById('hint').textContent = 'Copied! Now paste it in the terminal.'; }
+  };
+  if (state) { document.getElementById('hint').textContent = 'state ' + state; }
+</script>
+</body>
+</html>
